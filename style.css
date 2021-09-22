@@ -1,0 +1,39 @@
+body {
+    background-color: #EEEEEE;
+}
+
+h1 {
+    color: #141E61;
+    font-family: 'Gamja Flower', cursive;
+    font-size: 60px;
+    text-align: center;
+}
+
+.ratTitle {
+    font-size: 45px;
+}
+
+.container {
+    border: 3px solid #996633;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 560px;
+}
+
+.tile {
+    background-color: #8BB312;
+    background-image: url("tile.jpg");
+    background-size: cover;
+    border: 3px outset #996633;
+    font-size: 28px;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tile:hover {
+    opacity: 0.7;
+}
