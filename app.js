@@ -1,5 +1,5 @@
 $(()=>{  
-    minefield(99);
+    minefield(100);
 
     $('.tile').mousedown(function(event){
         if(event.which == 3)
