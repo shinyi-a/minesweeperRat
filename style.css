@@ -24,9 +24,9 @@ h1 {
 
 .container div {
     border: 3px outset #996633;
-    color: #EEEEEE;
     font-family: 'Gaegu', cursive;
     font-size: 28px;
+    font-weight: 600;
     height: 50px;
     width: 50px;
     display: flex;
@@ -60,4 +60,27 @@ div[class*="exploded"] {
     background-color: #996633;
     background-image: url("mud.jpg");
     background-size: cover;
+}
+
+
+div[totalbombsaround="1"] {
+    color: rgb(214, 192, 255);
+
+}
+
+div[totalbombsaround="2"] {
+    color: #ffc5e2;
+
+}
+
+div[totalbombsaround="3"] {
+    color: rgb(173, 243, 255);
+}
+
+div[totalbombsaround="4"] {
+    color: rgb(254, 255, 177);
+}
+
+div[totalbombsaround="5"] {
+    color: rgb(255, 228, 177);
 }

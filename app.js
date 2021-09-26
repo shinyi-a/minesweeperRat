@@ -133,7 +133,6 @@ function click(clickedgrid) {
             clickedgrid.innerHTML = numbombs;
             return;
         }
-        // surroundtile(clickedgrid, clickedID);
         surroundtile(clickedID);
     }
     clickedgrid.classList.add('clicked');
