@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {  
 let gameboard = [];
 let totalbombs = 20; //total number of bombs in the gameboard
+let gameover = false;
 
 //////////////////////////////////////////////
 //creates the gameboard
@@ -33,9 +34,10 @@ let minefield = grids => {
         gameboard.push(newtile);
 
         //left mouse click event
-        newtile.addEventListener('click', function(e) {
+        newtile.addEventListener('click', function() {
         click(newtile);
-    })
+        
+        })
     }//end for
 
     //adding number of surrounding bombs to each tile on the gameboard
@@ -46,9 +48,10 @@ let minefield = grids => {
     
         //add numbers if tile contains void class
         if (gameboard[i].classList.contains('void')) {
-            //checks if the tile on the left contains a bomb class.
-            //[bomb click x]
-            if (i>0 && !leftborder && gameboard[i-1].classList.contains('bomb')) {
+            //checks if the tile directly above contains a bomb class.
+            //[x bomb x]
+            //[x click x]
+            if (i>10 && gameboard[i-10].classList.contains('bomb')) {
                 bombsaround++;
             }
             //checks if the tile on top right corner contains a bomb class.
@@ -57,21 +60,21 @@ let minefield = grids => {
             if (i>9 && !rightborder && gameboard[i+1-10].classList.contains('bomb')) {
                 bombsaround++;
             }
-            //checks if the tile directly above contains a bomb class.
-            //[x bomb x]
-            //[x click x]
-            if (i>10 && gameboard[i-10].classList.contains('bomb')) {
-                bombsaround++;
-            }
-            //checks if the tile on top left corner contains a bomb class.
-            //[bomb x x]
-            //[x click x]
-            if (i>11 && !leftborder && gameboard[i-1-10].classList.contains('bomb')) {
-                bombsaround++;
-            }
             //checks if the tile on the right contains a bomb class.
             //[x click bomb]
             if (i<98 && !rightborder && gameboard[i+1].classList.contains('bomb')) {
+                bombsaround++;
+            }
+            //checks if the tile on the bottom right corner contains a bomb class.
+            //[x click x]
+            //[x x bomb]
+            if (i<88 && !rightborder && gameboard[i+1+10].classList.contains('bomb')) {
+                bombsaround++;
+            }
+            //checks if the tile directly below contains a bomb class.
+            //[x click x]
+            //[x bomb x]
+            if (i<89 && gameboard[i+10].classList.contains('bomb')) {
                 bombsaround++;
             }
             //checks if the tile on the bottom left corner contains a bomb class.
@@ -80,16 +83,15 @@ let minefield = grids => {
             if (i<90 && !leftborder && gameboard[i-1+10].classList.contains('bomb')) {
                 bombsaround++;
             }
-            //checks if the tile directly below contains a bomb class.
-            //[x click x]
-            //[x bomb x]
-            if (i<89 && !rightborder && gameboard[i+10].classList.contains('bomb')) {
+            //checks if the tile on the left contains a bomb class.
+            //[bomb click x]
+            if (i>0 && !leftborder && gameboard[i-1].classList.contains('bomb')) {
                 bombsaround++;
             }
-            //checks if the tile on the bottom right corner contains a bomb class.
+            //checks if the tile on top left corner contains a bomb class.
+            //[bomb x x]
             //[x click x]
-            //[x x bomb]
-            if (i<88 && !rightborder && gameboard[i+1+10].classList.contains('bomb')) {
+            if (i>11 && !leftborder && gameboard[i-1-10].classList.contains('bomb')) {
                 bombsaround++;
             }
             gameboard[i].setAttribute('totalbombsaround', bombsaround);
@@ -100,98 +102,93 @@ let minefield = grids => {
 minefield(100);//creates gameboard of 100 grids
 
 //////////////////////////////////////////////
-//click on tile action
+//left click on tile action
 //////////////////////////////////////////////
-let click = sq => {
-    if (sq.classList.contains('bomb')) {
+function click(clickedgrid) {
+    let clickedID = clickedgrid.id;
+    clickedID = parseInt(clickedID);
+    //exit function if the game is over
+    if (gameover) {
+        return;
+    }
+    //exit function if the clickedgrid was previously clicked or contains a flag
+    if (clickedgrid.classList.contains('clicked') || clickedgrid.classList.contains('mice')) {
+        return;
+    }
+
+    //checks left clicked tile contains bomb
+    if (clickedgrid.classList.contains('bomb')) {
         alert('game over');
-        sq.classList.add('exploded');
-        sq.innerHTML = '💣';
+        gameover = true;
+        gameboard.forEach(bombgrid => {
+            if (bombgrid.classList.contains('bomb')) {
+                bombgrid.classList.add('exploded');
+                bombgrid.innerHTML = '💣';
+            }
+        })
     } else {
-        let total = sq.getAttribute('totalbombsaround');
-        if (total !=0) {
-            sq.classList.add('clicked');
-            sq.innerHTML = total;
+        let numbombs = clickedgrid.getAttribute('totalbombsaround');
+        if (numbombs !=0) {
+            clickedgrid.classList.add('clicked');
+            clickedgrid.innerHTML = numbombs;
             return;
         }
-        sq.classList.add('clicked');
+        // surroundtile(clickedgrid, clickedID);
+        surroundtile(clickedID);
     }
+    clickedgrid.classList.add('clicked');
 }
 
 //////////////////////////////////////////////
 //check for surrounding tiles
 //////////////////////////////////////////////
-// let surround = (clickedID) => {
-//     const leftborder = (clickedID%10 === 0); //this is for a 10x10 gameboard
-//     const rightborder = (clickedID%10 === 9); //this is for a 10x10 gameboard
+function surroundtile(clickedID) {
+    const leftborder = (clickedID%10 === 0); //this is for a 10x10 gameboard
+    const rightborder = (clickedID%10 === 9); //this is for a 10x10 gameboard
 
-//     if (clickedID > 0 && !leftborder) {
-//         const clickedID = gameboard[clickedID-1].id;
-
-
-//     }
-
-
-
-
-
-
-
-
-
-
-
-
-// }// end surround function
-
-
-
-
-
-
-
-
-    //click on bomb
-    // $('.tile').mousedown(function(event){
-    //     // if(event.which == 3)
-    //     // {
-    //     //     // if (".tile:contains('🐀')") {
-    //     //     //     alert("right mouse click");
-    //     //     //     lessMouse();
-    //     //     //  } else {
-    //     //         alert("right mouse click");
-    //     //         addMouse();
-    //     //     //  };     
-    //     // };
-    //     if(event.which == 1)
-    //     {
-    //         if ($('.tile').hasClass('bomb')) {
-    //             alert("game over");
-    //         } else {
-    //             let number = newtile.getAttribute('data');
-    //             if (number !=0) {
-    //                 newtile.classList.add('clicked');
-    //                 newtile.innerHTML = number;
-    //                 return
-    //             }
-    //             newtile.classList.add('clicked');
-    //     }
-    //     }//end of left click event
-    // });//end of click event
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    setTimeout(() => {
+      if (clickedID>0 && !leftborder) {
+        const nextID = gameboard[clickedID-1].id;
+        const nexttile = document.getElementById(nextID);
+        click(nexttile);
+      }
+      if (clickedID>9 && !rightborder) {
+        const nextID = gameboard[clickedID+1-10].id;
+        const nexttile = document.getElementById(nextID);
+        click(nexttile);
+      }
+      if (clickedID>10) {
+        const nextID = gameboard[clickedID-10].id;
+        const nexttile = document.getElementById(nextID);
+        click(nexttile);
+      }
+      if (clickedID>11 && !leftborder) {
+        const nextID = gameboard[clickedID-1-10].id;
+        const nexttile = document.getElementById(nextID);
+        click(nexttile);
+      }
+      if (clickedID<98 && !rightborder) {
+        const nextID = gameboard[clickedID+1].id;
+        const nexttile = document.getElementById(nextID);
+        click(nexttile);
+      }
+      if (clickedID<90 && !leftborder) {
+        const nextID = gameboard[clickedID-1+10].id;
+        const nexttile = document.getElementById(nextID);
+        click(nexttile);
+      }
+      if (clickedID<88 && !rightborder) {
+        const nextID = gameboard[clickedID+1+10].id;
+        const nexttile = document.getElementById(nextID);
+        click(nexttile);
+      }
+      if (clickedID<89) {
+        const nextID = gameboard[clickedID+10].id;
+        const nexttile = document.getElementById(nextID);
+        click(nexttile);
+      }
+    }, 0)
+  }//end surroundtile function
 
 
 //add flag
@@ -230,4 +227,6 @@ let lessMouse = () => {
     //           alert("left mouse click");
     //     };
     // });
-});
+
+    
+});//end
