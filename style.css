@@ -13,6 +13,18 @@ h1 {
     font-size: 45px;
 }
 
+.minefield {
+    position: relative;
+    margin: 20px;
+}
+
+.gameoverMsg {
+    background-color: red;
+    z-index: 1;
+    height: 100px;
+    width: 100px;
+}
+
 .container {
     border: 3px solid #996633;
     display: flex;
@@ -90,12 +102,26 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    text-align: left;
-    font-size: 28px;
   }
 
+  #audiobtn {
+    background-color: rgb(219, 219, 219);
+    border-radius: 30px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    color: #141E61;
+    font-family: 'Gaegu', cursive;
+    font-size: 26px;
+    height: 40px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
 #audiobtn:hover {
-    text-shadow: 0 0 20px #EEEEEE;
+    background-color: rgb(252, 252, 252);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
 .timer {
@@ -111,17 +137,55 @@ footer {
     width: 200px;
 }
 
-.highscore {
+/* .highscore {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: auto;
     height: 50px;
     width: 200px;
-}
+} */
 
-.timer p, .highscore p {
+.timer p, .highscore, .rat{
     color: #141E61;
     font-family: 'Gaegu', cursive;
     font-size: 35px;
+}
+
+/* .gameoverMsg {
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    height: 50px;
+    width: 200px;
+    z-index: 1;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+} */
+
+.middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.scorerat {
+    display: grid;
+    grid-template-columns: 280px 280px;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "rat highscore";
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.highscore, .rat{
+    color: #141E61;
+    font-family: 'Gaegu', cursive;
+    font-size: 30px;
 }

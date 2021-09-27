@@ -1,16 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {  
 let gameboard = [];
 let totalbombs = 20; //total number of bombs in the gameboard
+let rats = 0; //number of rats used in the gameboard
 let gameover = false;
-// let explosionsoundMice = new sound('RatSqueak.mp3');
+let ratsleft = document.querySelector('.rat');
 
 //////////////////////////////////////////////
 //creates the gameboard
 //////////////////////////////////////////////
 let minefield = grids => {
+    ratsleft.innerHTML=`rats left: ${totalbombs}`;
     //randomise bombs and void tiles. attach as a class to each grid.
-    const bombtiles = Array.from({length: totalbombs}, () => 'bomb'); //makes an array of 'bombtile', which are grids with bombs
-    const voidtiles = Array.from({length: grids-totalbombs}, () => 'void'); //makes an array of 'voidtile', which are grids without bombs
+    const bombtiles = Array.from({length: totalbombs}, () => 'bomb'); //makes an array of 'bomb', which are grids with bombs
+    const voidtiles = Array.from({length: grids-totalbombs}, () => 'void'); //makes an array of 'void', which are grids without bombs
     const alltiles = [...bombtiles, ...voidtiles]; //makes a new array by combining bomb and void tiles
     
     //function to randomise array elememts, Fisher-Yates algorithm
@@ -38,6 +40,13 @@ let minefield = grids => {
         newtile.addEventListener('click', function() {
         leftclick(newtile);
         })
+
+        //right mouse click event
+        newtile.addEventListener('contextmenu', e => {
+          e.preventDefault();
+          addMouse(newtile);
+        });
+
     }//end for
 
     //adding number of surrounding bombs to each tile on the gameboard
@@ -112,7 +121,7 @@ let leftclick = clickedgrid => {
         return;
     }
     //exit function if the clickedgrid was previously clicked or contains a flag
-    if (clickedgrid.classList.contains('clicked') || clickedgrid.classList.contains('mice')) {
+    if (clickedgrid.classList.contains('clicked') || clickedgrid.classList.contains('rat')) {
         return;
     }
 
@@ -127,7 +136,7 @@ let leftclick = clickedgrid => {
                 const explodeaudio = document.getElementById('explodeaudio');
                 explodeaudio.play();
                 audio.pause();
-                audiobtn.innerHTML='🔈';
+                audiobtn.innerHTML='Music 🔈';
             }
         })
     } else {
@@ -140,7 +149,7 @@ let leftclick = clickedgrid => {
         surroundtile(clickedID);
     }
     clickedgrid.classList.add('clicked');
-}
+}//end of leftclick function
 
 //////////////////////////////////////////////
 //check for surrounding tiles
@@ -193,17 +202,33 @@ let surroundtile = clickedID => {
     }, 0)
   }//end surroundtile function
 
+//////////////////////////////////////////////
+//right click on tile action
+//////////////////////////////////////////////
+let addMouse = clickedgrid => {
+  //prevent clicks if the game is over
+  if (gameover) {
+    return;
+  }
+  if (!clickedgrid.classList.contains('clicked') && (rats < totalbombs)) {
+    if (!clickedgrid.classList.contains('rat')) {
+      clickedgrid.classList.add('rat');
+      clickedgrid.innerHTML='🐀';
+      const ratsqueak = document.getElementById('ratsqueak');
+      ratsqueak.play();
+      rats++;
+      ratsleft.innerHTML=`rats left: ${totalbombs-rats}`;
+    } else {
+      clickedgrid.classList.remove('rat');
+      clickedgrid.innerHTML='';
+      ratsqueak.play();
+      rats--;
+      ratsleft.innerHTML=`rats left: ${totalbombs-rats}`;
+    }
+  }
+}//end of addmouse function
 
-//add flag
-let addMouse = () => {
-    $('.bomb').html('🐀');
-    $('.void').html('🐀');
-}
 
-//remove flag
-let lessMouse = () => {
-    $('.tile').html('');
-}
 
 //win-lose message
 
@@ -214,28 +239,6 @@ let lessMouse = () => {
 
     
 
-    // $('.tile').mousedown(function(event){
-    //     if(event.which == 3)
-    //     {
-    //         // if (".tile:contains('🐀')") {
-    //         //     alert("right mouse click");
-    //         //     lessMouse();
-    //         //  } else {
-    //             alert("r1ight mouse click");
-    //             addMouse();
-    //         //  };     
-    //     };
-    //     if(event.which == 1)
-    //     {
-    //           alert("left mouse click");
-    //     };
-    // });
-
-    
-
-
-
-
 
 //background music
 const audio = document.getElementById('bgmusic');
@@ -243,10 +246,10 @@ const audiobtn = document.getElementById('audiobtn');
 audiobtn.addEventListener('click', function() {
   if (audio.paused) {
     audio.play();
-    audiobtn.innerHTML='🔊';
+    audiobtn.innerHTML='Music 🔊';
   } else {
     audio.pause();
-    audiobtn.innerHTML='🔈';
+    audiobtn.innerHTML='Music 🔈';
   }
   })
  
