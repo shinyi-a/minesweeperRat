@@ -64,23 +64,64 @@ div[class*="exploded"] {
 
 
 div[totalbombsaround="1"] {
-    color: rgb(214, 192, 255);
+    color: #ffd3d1;
 
 }
 
 div[totalbombsaround="2"] {
-    color: #ffc5e2;
+    color: #eed2ff
 
 }
 
 div[totalbombsaround="3"] {
-    color: rgb(173, 243, 255);
+    color: #bcc1ff;
 }
 
 div[totalbombsaround="4"] {
-    color: rgb(254, 255, 177);
+    color: #ffb4b8;
 }
 
 div[totalbombsaround="5"] {
     color: rgb(255, 228, 177);
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: left;
+    font-size: 28px;
+  }
+
+#audiobtn:hover {
+    text-shadow: 0 0 20px #EEEEEE;
+}
+
+.timer {
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 25px;
+    height: 50px;
+    width: 200px;
+}
+
+.highscore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    height: 50px;
+    width: 200px;
+}
+
+.timer p, .highscore p {
+    color: #141E61;
+    font-family: 'Gaegu', cursive;
+    font-size: 35px;
 }

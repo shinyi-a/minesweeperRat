@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let gameboard = [];
 let totalbombs = 20; //total number of bombs in the gameboard
 let gameover = false;
+// let explosionsoundMice = new sound('RatSqueak.mp3');
 
 //////////////////////////////////////////////
 //creates the gameboard
@@ -35,8 +36,7 @@ let minefield = grids => {
 
         //left mouse click event
         newtile.addEventListener('click', function() {
-        click(newtile);
-        
+        leftclick(newtile);
         })
     }//end for
 
@@ -104,7 +104,7 @@ minefield(100);//creates gameboard of 100 grids
 //////////////////////////////////////////////
 //left click on tile action
 //////////////////////////////////////////////
-function click(clickedgrid) {
+let leftclick = clickedgrid => {
     let clickedID = clickedgrid.id;
     clickedID = parseInt(clickedID);
     //exit function if the game is over
@@ -118,12 +118,16 @@ function click(clickedgrid) {
 
     //checks left clicked tile contains bomb
     if (clickedgrid.classList.contains('bomb')) {
-        alert('game over');
+        // alert('game over');
         gameover = true;
         gameboard.forEach(bombgrid => {
             if (bombgrid.classList.contains('bomb')) {
                 bombgrid.classList.add('exploded');
                 bombgrid.innerHTML = '💣';
+                const explodeaudio = document.getElementById('explodeaudio');
+                explodeaudio.play();
+                audio.pause();
+                audiobtn.innerHTML='🔈';
             }
         })
     } else {
@@ -141,7 +145,7 @@ function click(clickedgrid) {
 //////////////////////////////////////////////
 //check for surrounding tiles
 //////////////////////////////////////////////
-function surroundtile(clickedID) {
+let surroundtile = clickedID => {
     const leftborder = (clickedID%10 === 0); //this is for a 10x10 gameboard
     const rightborder = (clickedID%10 === 9); //this is for a 10x10 gameboard
 
@@ -149,42 +153,42 @@ function surroundtile(clickedID) {
       if (clickedID>0 && !leftborder) {
         const nextID = gameboard[clickedID-1].id;
         const nexttile = document.getElementById(nextID);
-        click(nexttile);
+        leftclick(nexttile);
       }
       if (clickedID>9 && !rightborder) {
         const nextID = gameboard[clickedID+1-10].id;
         const nexttile = document.getElementById(nextID);
-        click(nexttile);
+        leftclick(nexttile);
       }
       if (clickedID>10) {
         const nextID = gameboard[clickedID-10].id;
         const nexttile = document.getElementById(nextID);
-        click(nexttile);
+        leftclick(nexttile);
       }
       if (clickedID>11 && !leftborder) {
         const nextID = gameboard[clickedID-1-10].id;
         const nexttile = document.getElementById(nextID);
-        click(nexttile);
+        leftclick(nexttile);
       }
       if (clickedID<98 && !rightborder) {
         const nextID = gameboard[clickedID+1].id;
         const nexttile = document.getElementById(nextID);
-        click(nexttile);
+        leftclick(nexttile);
       }
       if (clickedID<90 && !leftborder) {
         const nextID = gameboard[clickedID-1+10].id;
         const nexttile = document.getElementById(nextID);
-        click(nexttile);
+        leftclick(nexttile);
       }
       if (clickedID<88 && !rightborder) {
         const nextID = gameboard[clickedID+1+10].id;
         const nexttile = document.getElementById(nextID);
-        click(nexttile);
+        leftclick(nexttile);
       }
       if (clickedID<89) {
         const nextID = gameboard[clickedID+10].id;
         const nexttile = document.getElementById(nextID);
-        click(nexttile);
+        leftclick(nexttile);
       }
     }, 0)
   }//end surroundtile function
@@ -228,4 +232,32 @@ let lessMouse = () => {
     // });
 
     
+
+
+
+
+
+//background music
+const audio = document.getElementById('bgmusic');
+const audiobtn = document.getElementById('audiobtn');
+audiobtn.addEventListener('click', function() {
+  if (audio.paused) {
+    audio.play();
+    audiobtn.innerHTML='🔊';
+  } else {
+    audio.pause();
+    audiobtn.innerHTML='🔈';
+  }
+  })
+ 
+
+
+
+
+
+
+
+
+
+
 });//end
