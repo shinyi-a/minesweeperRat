@@ -136,10 +136,12 @@ let leftclick = clickedgrid => {
                 const explodeaudio = document.getElementById('explodeaudio');
                 explodeaudio.play();
                 audio.pause();
-                audiobtn.innerHTML='Music 🔈';
                 document.getElementById("gameoverMsg").style.display = 'block';
                 setTimeout(() => {
                 document.getElementById("gameoverMsg").innerHTML = 'You lost!';
+                const losesound = document.getElementById('losesound');
+                losesound.play();
+                audio.play();
               }, 1000);
             }
         })
@@ -232,6 +234,8 @@ let addMouse = clickedgrid => {
           document.getElementById("gameoverMsg").style.display = 'block';
           setTimeout(() => {
           document.getElementById("gameoverMsg").innerHTML = 'You win!';
+          const winsound = document.getElementById('winsound');
+          winsound.play();
         }, 500);
         }
       }//end for
