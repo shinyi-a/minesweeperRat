@@ -78,17 +78,17 @@ div[class*="exploded"] {
     background-size: cover;
 }
 
-.void {
+.void, .bomb {
     background-color: #8BB312;
     background-image: url("tile.jpg");
     background-size: cover;
 }
 
-.bomb {
+/* .bomb {
     background-color: #996633;
     background-image: url("mud.jpg");
     background-size: cover;
-}
+} */
 
 
 div[totalbombsaround="1"] {

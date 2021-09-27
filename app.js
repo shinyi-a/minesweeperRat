@@ -135,13 +135,11 @@ let leftclick = clickedgrid => {
                 bombgrid.innerHTML = '💣';
                 const explodeaudio = document.getElementById('explodeaudio');
                 explodeaudio.play();
-                audio.pause();
                 document.getElementById("gameoverMsg").style.display = 'block';
                 setTimeout(() => {
                 document.getElementById("gameoverMsg").innerHTML = 'You lost!';
                 const losesound = document.getElementById('losesound');
                 losesound.play();
-                audio.play();
               }, 1000);
             }
         })
@@ -149,12 +147,16 @@ let leftclick = clickedgrid => {
         let numbombs = clickedgrid.getAttribute('totalbombsaround');
         if (numbombs !=0) {
             clickedgrid.classList.add('clicked');
+            const cleartile = document.getElementById('cleartile');
+            cleartile.play();
             clickedgrid.innerHTML = numbombs;
             return;
         }
         surroundtile(clickedID);
     }
     clickedgrid.classList.add('clicked');
+    const cleartile = document.getElementById('cleartile');
+    cleartile.play();
 }//end of leftclick function
 
 //////////////////////////////////////////////
