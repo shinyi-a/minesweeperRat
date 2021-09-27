@@ -137,6 +137,10 @@ let leftclick = clickedgrid => {
                 explodeaudio.play();
                 audio.pause();
                 audiobtn.innerHTML='Music 🔈';
+                document.getElementById("gameoverMsg").style.display = 'block';
+                setTimeout(() => {
+                document.getElementById("gameoverMsg").innerHTML = 'You lost!';
+              }, 1000);
             }
         })
     } else {
@@ -218,6 +222,19 @@ let addMouse = clickedgrid => {
       ratsqueak.play();
       rats++;
       ratsleft.innerHTML=`rats left: ${totalbombs-rats}`;
+      //check if all rats are placed on bomb tiles
+      let foundbombs = 0;
+      for (let i=0;i<gameboard.length;i++) {
+        if (gameboard[i].classList.contains('rat') && gameboard[i].classList.contains('bomb')) {
+          foundbombs++;
+        }
+        if (foundbombs===totalbombs) {
+          document.getElementById("gameoverMsg").style.display = 'block';
+          setTimeout(() => {
+          document.getElementById("gameoverMsg").innerHTML = 'You win!';
+        }, 500);
+        }
+      }//end for
     } else {
       clickedgrid.classList.remove('rat');
       clickedgrid.innerHTML='';
@@ -228,9 +245,28 @@ let addMouse = clickedgrid => {
   }
 }//end of addmouse function
 
-
-
 //win-lose message
+
+
+
+
+
+//count up timer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

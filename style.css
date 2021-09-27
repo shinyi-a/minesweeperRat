@@ -14,24 +14,40 @@ h1 {
 }
 
 .minefield {
+    display: flex;
+    justify-content: center;
     position: relative;
-    margin: 20px;
 }
 
-.gameoverMsg {
-    background-color: red;
-    z-index: 1;
-    height: 100px;
-    width: 100px;
+#gameoverMsg {
+    animation: fadeIn 3s;
+    backdrop-filter: blur(6px);
+    color: #EEEEEE;
+    display: none;
+    font-family: 'Gaegu', cursive;
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 560px;
+    height: 566px;
+    width: 566px;
 }
+
+@keyframes fadeIn {
+    0% {backdrop-filter:blur(0);}
+    100% {backdrop-filter:blur(6px);}
+  }
 
 .container {
     border: 3px solid #996633;
     display: flex;
     flex-wrap: wrap;
     margin: auto;
+    position: absolute;
     height: 560px;
     width: 560px;
+    z-index: -1;
 }
 
 .container div {
@@ -62,17 +78,17 @@ div[class*="exploded"] {
     background-size: cover;
 }
 
-.void {
+.void, .bomb {
     background-color: #8BB312;
     background-image: url("tile.jpg");
     background-size: cover;
 }
 
-.bomb {
+/* .bomb {
     background-color: #996633;
     background-image: url("mud.jpg");
     background-size: cover;
-}
+} */
 
 
 div[totalbombsaround="1"] {
@@ -121,7 +137,8 @@ footer {
 
 #audiobtn:hover {
     background-color: rgb(252, 252, 252);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    cursor:pointer;
 }
 
 .timer {
@@ -132,7 +149,7 @@ footer {
     align-items: center;
     justify-content: center;
     margin: auto;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
     height: 50px;
     width: 200px;
 }
@@ -146,33 +163,17 @@ footer {
     width: 200px;
 } */
 
-.timer p, .highscore, .rat{
+.timer p {
     color: #141E61;
     font-family: 'Gaegu', cursive;
     font-size: 35px;
 }
-
-/* .gameoverMsg {
-    background-color: red;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    height: 50px;
-    width: 200px;
-    z-index: 1;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: 1;
-} */
 
 .middle {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 
 .scorerat {
     display: grid;
