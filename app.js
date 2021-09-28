@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {  
 let gameboard = [];
-let totalbombs = 20; //total number of bombs in the gameboard
+let totalbombs = 12; //total number of bombs in the gameboard
 let rats = 0; //number of rats used in the gameboard
 let gameover = false;
 let ratsleft = document.querySelector('.rat');
@@ -288,10 +288,10 @@ const audiobtn = document.getElementById('audiobtn');
 audiobtn.addEventListener('click', function() {
   if (audio.paused) {
     audio.play();
-    audiobtn.innerHTML='Music 🔊';
+    audiobtn.innerHTML='Music 🎵';
   } else {
     audio.pause();
-    audiobtn.innerHTML='Music 🔈';
+    audiobtn.innerHTML='Music 🔇';
   }
   })
  

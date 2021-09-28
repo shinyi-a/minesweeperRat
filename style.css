@@ -128,6 +128,7 @@ footer {
     font-family: 'Gaegu', cursive;
     font-size: 26px;
     height: 40px;
+    margin: 10px;
     width: 120px;
     display: flex;
     align-items: center;
