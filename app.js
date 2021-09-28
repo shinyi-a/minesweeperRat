@@ -120,14 +120,14 @@ let leftclick = clickedgrid => {
     if (gameover) {
         return;
     }
-    //exit function if the clickedgrid was previously clicked or contains a flag
+
+    //prevent left click if grid is either clicked or contains a rat
     if (clickedgrid.classList.contains('clicked') || clickedgrid.classList.contains('rat')) {
         return;
     }
 
     //checks left clicked tile contains bomb
     if (clickedgrid.classList.contains('bomb')) {
-        // alert('game over');
         gameover = true;
         gameboard.forEach(bombgrid => {
             if (bombgrid.classList.contains('bomb')) {
@@ -136,15 +136,15 @@ let leftclick = clickedgrid => {
                 const explodeaudio = document.getElementById('explodeaudio');
                 explodeaudio.play();
                 document.getElementById("gameoverMsg").style.display = 'block';
-                setTimeout(() => {
-                // document.getElementById("gameoverMsg").innerHTML = 'You lost!\n<div class="tryagainbtn"></div>';
-                document.getElementById("gameoverMsg").innerHTML = 'You lost! ☠️';
-                document.getElementById("tryagainbtn").style.display = 'block';
-                const losesound = document.getElementById('losesound');
-                losesound.play();
-              }, 1000);
+                    setTimeout(() => {
+                    document.getElementById("gameoverMsg").innerHTML = 'You lost! ☠️';
+                    document.getElementById("tryagainbtn").style.display = 'block';
+                    const losesound = document.getElementById('losesound');
+                    losesound.play();
+                  }, 1000);
             }
         })
+        //if no bomb class
     } else {
         let numbombs = clickedgrid.getAttribute('totalbombsaround');
         if (numbombs !=0) {
@@ -152,13 +152,15 @@ let leftclick = clickedgrid => {
             const cleartile = document.getElementById('cleartile');
             cleartile.play();
             clickedgrid.innerHTML = numbombs;
+            checkforwin();
             return;
         }
         surroundtile(clickedID);
-    }
+    }//end else
     clickedgrid.classList.add('clicked');
     const cleartile = document.getElementById('cleartile');
     cleartile.play();
+    checkforwin();
 }//end of leftclick function
 
 //////////////////////////////////////////////
@@ -220,7 +222,7 @@ let addMouse = clickedgrid => {
   if (gameover) {
     return;
   }
-  if (!clickedgrid.classList.contains('clicked') && (rats < totalbombs)) {
+  if (!clickedgrid.classList.contains('clicked')) {
     if (!clickedgrid.classList.contains('rat')) {
       clickedgrid.classList.add('rat');
       clickedgrid.innerHTML='🐀';
@@ -228,23 +230,6 @@ let addMouse = clickedgrid => {
       ratsqueak.play();
       rats++;
       ratsleft.innerHTML=`rats left: ${totalbombs-rats}`;
-      //check if all rats are placed on bomb tiles
-      let foundbombs = 0;
-      for (let i=0;i<gameboard.length;i++) {
-        if (gameboard[i].classList.contains('rat') && gameboard[i].classList.contains('bomb')) {
-          foundbombs++;
-          if (foundbombs===totalbombs) {
-            document.getElementById("gameoverMsg").style.display = 'block';
-            setTimeout(() => {
-            document.getElementById("gameoverMsg").innerHTML = 'You win! 🎉';
-            document.getElementById("tryagainbtn").style.display = 'block';
-            const winsound = document.getElementById('winsound');
-            winsound.play();
-          }, 500);
-          }
-        }
-
-      }//end for
     } else {
       clickedgrid.classList.remove('rat');
       clickedgrid.innerHTML='';
@@ -261,12 +246,20 @@ tryagain.addEventListener('click', function() {
   window.location.reload();
   })
 
-
-
-
-//count up timer
-
-
+//check for win here
+let checkforwin = () => {
+  let allvoidclicked = document.getElementsByClassName('void clicked');
+    if (allvoidclicked.length===100-totalbombs) {
+      document.getElementById("gameoverMsg").style.display = 'block';
+      setTimeout(() => {
+      document.getElementById("gameoverMsg").innerHTML = 'You win! 🎉';
+      document.getElementById("tryagainbtn").style.display = 'block';
+      const winsound = document.getElementById('winsound');
+      winsound.play();
+    }, 500);
+  return;
+  }
+}
 
 
 
