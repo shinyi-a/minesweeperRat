@@ -16,7 +16,9 @@ h1 {
 .minefield {
     display: flex;
     justify-content: center;
-    position: relative;
+    /* position: relative; */
+    height: 566px;
+    align-items: center;
 }
 
 #gameoverMsg {
@@ -25,19 +27,43 @@ h1 {
     color: #EEEEEE;
     display: none;
     font-family: 'Gaegu', cursive;
-    font-size: 50px;
+    font-size: 55px;
     font-weight: 600;
     text-align: center;
     vertical-align: middle;
-    line-height: 560px;
+    line-height: 300px;
     height: 566px;
     width: 566px;
+    /* position: absolute; */
 }
 
 @keyframes fadeIn {
     0% {backdrop-filter:blur(0);}
     100% {backdrop-filter:blur(6px);}
   }
+
+#tryagainbtn {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 30px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    color: #EEEEEE;
+    display: none;
+    font-family: 'Gaegu', cursive;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    height: 50px;
+    width: 180px;
+    position: absolute;
+}
+
+#tryagainbtn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.1) inset;
+    cursor:pointer;
+}
 
 .container {
     border: 3px solid #996633;
@@ -47,7 +73,7 @@ h1 {
     position: absolute;
     height: 560px;
     width: 560px;
-    z-index: -1;
+    /* z-index: -1; */
 }
 
 .container div {
@@ -78,17 +104,17 @@ div[class*="exploded"] {
     background-size: cover;
 }
 
-.void, .bomb {
+.void {
     background-color: #8BB312;
     background-image: url("tile.jpg");
     background-size: cover;
 }
 
-/* .bomb {
+.bomb {
     background-color: #996633;
     background-image: url("mud.jpg");
     background-size: cover;
-} */
+}
 
 
 div[totalbombsaround="1"] {
@@ -120,7 +146,7 @@ footer {
     width: 100%;
   }
 
-  #audiobtn {
+#audiobtn {
     background-color: rgb(219, 219, 219);
     border-radius: 30px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -133,7 +159,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
 
 
 #audiobtn:hover {

@@ -137,7 +137,9 @@ let leftclick = clickedgrid => {
                 explodeaudio.play();
                 document.getElementById("gameoverMsg").style.display = 'block';
                 setTimeout(() => {
-                document.getElementById("gameoverMsg").innerHTML = 'You lost!';
+                // document.getElementById("gameoverMsg").innerHTML = 'You lost!\n<div class="tryagainbtn"></div>';
+                document.getElementById("gameoverMsg").innerHTML = 'You lost! ☠️';
+                document.getElementById("tryagainbtn").style.display = 'block';
                 const losesound = document.getElementById('losesound');
                 losesound.play();
               }, 1000);
@@ -231,15 +233,17 @@ let addMouse = clickedgrid => {
       for (let i=0;i<gameboard.length;i++) {
         if (gameboard[i].classList.contains('rat') && gameboard[i].classList.contains('bomb')) {
           foundbombs++;
+          if (foundbombs===totalbombs) {
+            document.getElementById("gameoverMsg").style.display = 'block';
+            setTimeout(() => {
+            document.getElementById("gameoverMsg").innerHTML = 'You win! 🎉';
+            document.getElementById("tryagainbtn").style.display = 'block';
+            const winsound = document.getElementById('winsound');
+            winsound.play();
+          }, 500);
+          }
         }
-        if (foundbombs===totalbombs) {
-          document.getElementById("gameoverMsg").style.display = 'block';
-          setTimeout(() => {
-          document.getElementById("gameoverMsg").innerHTML = 'You win!';
-          const winsound = document.getElementById('winsound');
-          winsound.play();
-        }, 500);
-        }
+
       }//end for
     } else {
       clickedgrid.classList.remove('rat');
@@ -252,7 +256,10 @@ let addMouse = clickedgrid => {
 }//end of addmouse function
 
 //win-lose message
-
+let tryagain = document.getElementById("tryagainbtn");
+tryagain.addEventListener('click', function() {
+  window.location.reload();
+  })
 
 
 
