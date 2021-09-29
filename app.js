@@ -3,7 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let totalbombs = Math.floor(100/8); //total number of bombs in the gameboard
   let rats = 0; //number of rats used in the gameboard
   let gameover = false;
-  
+  //timer
+  let hr = 0;
+  let min = 0;
+  let sec = 0;
+  let timerStatus = false;
+
   //////////////////////////////////////////////
   //creates the gameboard
   //////////////////////////////////////////////
@@ -39,6 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
           //left mouse click event
           newtile.addEventListener('click', function() {
           leftclick(newtile);
+          let starttimerleft = document.getElementsByClassName('clicked');
+            if (starttimerleft.length === 1) {
+              if (gameover===false) {
+                startTimer();
+              }
+            };//end if
           })
   
           //right mouse click event
@@ -118,12 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
       clickedID = parseInt(clickedID);
       //exit function if the game is over
       if (gameover) {
-          return;
+        stopTimer();
+        return;
       }
   
       //prevent left click if grid is either clicked or contains a rat
       if (clickedgrid.classList.contains('clicked') || clickedgrid.classList.contains('rat')) {
-          return;
+        return;
       }
   
       //checks left clicked tile contains bomb
@@ -133,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
               if (bombgrid.classList.contains('bomb')) {
                   bombgrid.classList.add('exploded');
                   bombgrid.innerHTML = '💣';
+                  stopTimer();
                   const explodeaudio = document.getElementById('explodeaudio');
                   explodeaudio.play();
                   document.getElementById("gameoverMsg").style.display = 'block';
@@ -242,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }//end of addmouse function
   
-  //win-lose message
+  //try again button
   let tryagain = document.getElementById("tryagainbtn");
   tryagain.addEventListener('click', function() {
     window.location.reload();
@@ -253,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let allvoidclicked = document.getElementsByClassName('void clicked');
       if (allvoidclicked.length===100-totalbombs) {
         document.getElementById("gameoverMsg").style.display = 'block';
+        stopTimer();
         setTimeout(() => {
         document.getElementById("gameoverMsg").innerHTML = 'You win! 🎉';
         document.getElementById("tryagainbtn").style.display = 'block';
@@ -262,12 +276,73 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
     }
   }
+
+//////////////////////////////////////////////
+//timer
+//////////////////////////////////////////////
+function startTimer() {
+  if (timerStatus == false) {
+        timerStatus = true;//toggle timer (turn on)
+        timerCycle();
+    }
+}
+function stopTimer() {
+  if (timerStatus == true) {
+    timerStatus = false; //toggle timer (turn off)
+
+    //display time spent by user xxx
+    document.getElementById("highscore").innerHTML = "high score: " + hr + ':' + min + ':' + sec;
+    //TODO: update local storage
+  }
+}
+
+function timerCycle() {
+    if (timerStatus == true) {
+    sec = parseInt(sec);
+    min = parseInt(min);
+    hr = parseInt(hr);
+
+    sec = sec + 1; //increase sec 
+
+    //every 60 sec -> 1min
+    if (sec == 60) {
+      min = min + 1;
+      sec = 0;
+    }
+    //every 60 min -> 1hr
+    if (min == 60) {
+      hr = hr + 1;
+      min = 0;
+      sec = 0;
+    }
+
+    //formatting (padding with 0s in front of numbers less than 10 for sec,min,hr variable)
+    if (sec < 10 || sec == 0) {
+      sec = '0' + sec;
+    }
+    if (min < 10 || min == 0) {
+      min = '0' + min;
+    }
+    if (hr < 10 || hr == 0) {
+      hr = '0' + hr;
+    }
+
+    //update timer text on html
+    //timer.innerHTML = hr + ':' + min + ':' + sec;
+    document.getElementById("timer").innerHTML =  hr + ':' + min + ':' + sec;
+    //refresh timer every 1s
+    setInterval(timerCycle, 1000);
+  }
+}//end timer cycle
   
-  
-  
-  
-  
-  
+//////////////////////////////////////////////
+//highscore storage
+//////////////////////////////////////////////
+// const localhighscore = JSON.parse(window.localStorage.getItem('highscore'));
+// if (localhighscore<ss) {
+
+// }
+// localStorage.setItem('highscore', 'score');
   
   
   

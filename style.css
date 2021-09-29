@@ -167,7 +167,7 @@ footer {
     cursor:pointer;
 }
 
-.timer {
+#timer {
     background-color: white;
     border-radius: 30px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -208,7 +208,7 @@ footer {
     margin-right: auto;
 }
 
-.highscore, .rat{
+#highscore, .rat{
     color: #141E61;
     font-family: 'Gaegu', cursive;
     font-size: 30px;
