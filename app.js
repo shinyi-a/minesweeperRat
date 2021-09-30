@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let min = 0;
   let sec = 0;
   let timerStatus = false;
+  let t;
 
   //////////////////////////////////////////////
   //creates the gameboard
@@ -281,74 +282,75 @@ document.addEventListener('DOMContentLoaded', () => {
 //timer
 //////////////////////////////////////////////
 function startTimer() {
-  if (timerStatus == false) {
-        timerStatus = true;//toggle timer (turn on)
-        timerCycle();
-    }
-}
-function stopTimer() {
-  if (timerStatus == true) {
-    timerStatus = false; //toggle timer (turn off)
-
-    //display time spent by user xxx
-    document.getElementById("highscore").innerHTML = "high score: " + hr + ':' + min + ':' + sec;
-    //TODO: update local storage
+  if (timerStatus === false) {
+    timerStatus = true;//toggle timer (turn on)
+    timerCycle();
   }
+}
+
+function stopTimer() {
+  clearTimeout(t);
+  timerStatus = false;//toggle timer (turn off)
+  //compare with high score
+  document.getElementById("highscore").innerHTML = "high score: " + hr + ':' + min + ':' + sec;
 }
 
 function timerCycle() {
-    if (timerStatus == true) {
-    sec = parseInt(sec);
-    min = parseInt(min);
-    hr = parseInt(hr);
+  sec = parseInt(sec);
+  min = parseInt(min);
+  hr = parseInt(hr);
 
-    sec = sec + 1; //increase sec 
+  sec = sec + 1; //increase sec 
 
-    //every 60 sec -> 1min
-    if (sec == 60) {
-      min = min + 1;
-      sec = 0;
-    }
-    //every 60 min -> 1hr
-    if (min == 60) {
-      hr = hr + 1;
-      min = 0;
-      sec = 0;
-    }
-
-    //formatting (padding with 0s in front of numbers less than 10 for sec,min,hr variable)
-    if (sec < 10 || sec == 0) {
-      sec = '0' + sec;
-    }
-    if (min < 10 || min == 0) {
-      min = '0' + min;
-    }
-    if (hr < 10 || hr == 0) {
-      hr = '0' + hr;
-    }
-
-    //update timer text on html
-    //timer.innerHTML = hr + ':' + min + ':' + sec;
-    document.getElementById("timer").innerHTML =  hr + ':' + min + ':' + sec;
-    //refresh timer every 1s
-    setTimeout(timerCycle, 1000);
+  //every 60 sec -> 1min
+  if (sec === 60) {
+    min = min + 1;
+    sec = 0;
   }
+  //every 60 min -> 1hr
+  if (min === 60) {
+    hr = hr + 1;
+    min = 0;
+    sec = 0;
+  }
+
+  //formatting (padding with 0s in front of numbers less than 10 for sec,min,hr variable)
+  if (sec < 10) {
+    sec = '0' + sec;
+  }
+  if (min < 10) {
+    min = '0' + min;
+  }
+  if (hr < 10) {
+    hr = '0' + hr;
+  }
+
+  //update timer text on html
+  document.getElementById("timer").innerHTML =  hr + ':' + min + ':' + sec;
+  //refresh timer every 1s
+  t = setTimeout(timerCycle, 1000);
 }//end timer cycle
   
 //////////////////////////////////////////////
 //highscore storage
 //////////////////////////////////////////////
-// const localhighscore = JSON.parse(window.localStorage.getItem('highscore'));
-// if (localhighscore<ss) {
+// function checkhighscore() {
+//   const localhighscore = JSON.parse(window.localStorage.getItem('highscore'));
+//   if (localhighscore<ss) {
+  
+//   }
+//   localStorage.setItem('highscore', 'score');
+// }//end checkhighscore
 
-// }
-// localStorage.setItem('highscore', 'score');
   
+//   const score = {
+//     hr: hr,
+//     min: min,
+//     sec: sec
+//   }
   
-  
-  
-  
-  
+//   //store values
+//   window.localStorage.setItem('highscore', JSON.stringify(score))
   
   
   
