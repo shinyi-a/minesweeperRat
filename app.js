@@ -331,7 +331,7 @@ function timerCycle() {
     //timer.innerHTML = hr + ':' + min + ':' + sec;
     document.getElementById("timer").innerHTML =  hr + ':' + min + ':' + sec;
     //refresh timer every 1s
-    setInterval(timerCycle, 1000);
+    setTimeout(timerCycle, 1000);
   }
 }//end timer cycle
   
