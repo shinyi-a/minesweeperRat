@@ -1,5 +1,5 @@
-# Minesweeper Rat 🐀
-Minesweeper is a single player game with the objective to clear the grid without denotating the hidden bombs. The rat theme is inspired by landmine-sniffing rats that helped to uncover hidden landmines.
+[# Minesweeper Rat 🐀] (https://shinyi-a.github.io/minesweeperRat/)
+Minesweeper is a single player game with the objective to clear the grid without denotating the hidden bombs. The rat theme is inspired by [landmine-sniffing rats] (https://www.apopo.org/en) that helped to uncover hidden landmines.
 
 ## How to play
 -	Left click to uncover the grids that do not contain a hidden bomb.
