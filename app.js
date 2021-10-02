@@ -9,13 +9,32 @@ document.addEventListener('DOMContentLoaded', () => {
   let sec = 0;
   let timerStatus = false;
   let t;
-
   //////////////////////////////////////////////
   //creates the gameboard
   //////////////////////////////////////////////
   let minefield = grids => {
+      //display how many rats from start
       let ratsleft = document.querySelector('.rat');
       ratsleft.innerHTML=`rats left: ${totalbombs}`;
+
+      //display last highscore
+      const localhighscore = JSON.parse(window.localStorage.getItem('highscore'));
+      let localhr =  parseInt(localhighscore.hours);
+      let localmin = parseInt(localhighscore.minutes);
+      let localsec = parseInt(localhighscore.seconds);
+      //formatting (padding with 0s in front of numbers less than 10 for sec,min,hr variable)
+      if (localsec < 10) {
+        localsec = '0' + localsec;
+      }
+      if (localmin < 10) {
+        localmin = '0' + localmin;
+      }
+      if (localhr < 10) {
+        localhr = '0' + localhr;
+      }
+      //display local storage highscore
+      document.getElementById("highscore").innerHTML =  "high score: " + localhr + ':' + localmin + ':' + localsec;
+
       //randomise bombs and void tiles. attach as a class to each grid.
       const bombtiles = Array.from({length: totalbombs}, () => 'bomb'); //makes an array of 'bomb', which are grids with bombs
       const voidtiles = Array.from({length: grids-totalbombs}, () => 'void'); //makes an array of 'void', which are grids without bombs
@@ -268,6 +287,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (allvoidclicked.length===100-totalbombs) {
         document.getElementById("gameoverMsg").style.display = 'block';
         stopTimer();
+        sec = parseInt(sec);
+        min = parseInt(min);
+        hr = parseInt(hr);
+        checkhighscore(hr, min, sec);
         setTimeout(() => {
         document.getElementById("gameoverMsg").innerHTML = 'You win! 🎉';
         document.getElementById("tryagainbtn").style.display = 'block';
@@ -289,10 +312,9 @@ function startTimer() {
 }
 
 function stopTimer() {
-  clearTimeout(t);
   timerStatus = false;//toggle timer (turn off)
-  //compare with high score
-  document.getElementById("highscore").innerHTML = "high score: " + hr + ':' + min + ':' + sec;
+  clearTimeout(t);
+  // document.getElementById("highscore").innerHTML = "high score: " + hr + ':' + min + ':' + sec;
 }
 
 function timerCycle() {
@@ -334,34 +356,65 @@ function timerCycle() {
 //////////////////////////////////////////////
 //highscore storage
 //////////////////////////////////////////////
-// function checkhighscore() {
-//   const localhighscore = JSON.parse(window.localStorage.getItem('highscore'));
-//   if (localhighscore<ss) {
-  
-//   }
-//   localStorage.setItem('highscore', 'score');
-// }//end checkhighscore
+  function checkhighscore(h,m,s) {
+    // current score
+    const score = {
+      hours: h,
+      minutes: m,
+      seconds: s
+    };
 
+    const localhighscore = JSON.parse(window.localStorage.getItem('highscore'));
+    let localhr =  parseInt(localhighscore.hours);
+    let localmin = parseInt(localhighscore.minutes);
+    let localsec = parseInt(localhighscore.seconds);
+
+    //formatting (padding with 0s in front of numbers less than 10 for sec,min,hr variable)
+    if (score.seconds < 10) {
+      score.seconds = '0' + score.seconds;
+    }
+    if (score.minutes < 10) {
+      score.minutes = '0' + score.minutes;
+    }
+    if (score.hours < 10) {
+      score.hours = '0' + score.hours;
+    }
+
+    if (score.hours<localhr) {
+        window.localStorage.clear();
+        window.localStorage.setItem('highscore', JSON.stringify(score));
+      document.getElementById("highscore").innerHTML =  "high score: " + score.hours + ':' + score.minutes + ':' + score.seconds;
+    } else if (score.hours===localhr && score.minutes<localmin) {
+        window.localStorage.clear();
+        window.localStorage.setItem('highscore', JSON.stringify(score));
+        document.getElementById("highscore").innerHTML =  "high score: " + score.hours + ':' + score.minutes + ':' + score.seconds;
+    } else if (score.minutes===localmin && score.seconds<localsec) {
+        window.localStorage.clear();
+        window.localStorage.setItem('highscore', JSON.stringify(score));
+        document.getElementById("highscore").innerHTML =  "high score: " + score.hours + ':' + score.minutes + ':' + score.seconds;
+    } else {
+        // document.getElementById("highscore").innerHTML =  "high score: " + localhr + ':' + localmin + ':' + localsec;
+        return;
+    }
+}//end checkhighscore
   
-//   const score = {
-//     hr: hr,
-//     min: min,
-//     sec: sec
-//   }
-  
-//   //store values
-//   window.localStorage.setItem('highscore', JSON.stringify(score))
-  
-  
+
+//check if current high score is lower than storage high score
+//check for hr
+  //if current hr < storage hr, store
+//check for min
+  //if hr=hr && if current min < storage min, store
+//check for sec
+  //if hr=hr && if min=min && if current sec < storage sec, store
   
   
   
   
   
       
-  
-  
-  //background music
+//////////////////////////////////////////////
+//background music
+//////////////////////////////////////////////
   const audio = document.getElementById('bgmusic');
   const audiobtn = document.getElementById('audiobtn');
   audiobtn.addEventListener('click', function() {
@@ -372,7 +425,7 @@ function timerCycle() {
       audio.pause();
       audiobtn.innerHTML='Music 🔇';
     }
-    })
+  })
    
   
   
