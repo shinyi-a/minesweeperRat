@@ -18,7 +18,4 @@ Minesweeper is a single player game with the objective to clear the grid without
 ## Technologies used
 This game is built on vanilla Javascript, HTML and CSS.
 
-## Unsolved problems
-To prevent default high score from rewriting the previous high score upon refresh.
-
 ![Alt Text](https://github.com/shinyi-a/minesweeperRat/blob/main/minesweeperratUI.jpg)
