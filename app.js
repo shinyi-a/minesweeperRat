@@ -379,7 +379,9 @@ function timerCycle() {
     if (score.hours < 10) {
       score.hours = '0' + score.hours;
     }
-
+    console.log(score.hours);
+    console.log(score.minutes);
+    console.log(score.seconds);
     if (score.hours<localhr) {
         window.localStorage.clear();
         window.localStorage.setItem('highscore', JSON.stringify(score));
