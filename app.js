@@ -12,12 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
   let t;
 
   //set default highscore
-  const score = {
-    hours: 99,
-    minutes: 99,
-    seconds: 99
-  }; 
-  window.localStorage.setItem('highscore', JSON.stringify(score));
+  let preference = localStorage.getItem('highscore');
+  if(null === preference)
+  {
+    const score = {
+      hours: 99,
+      minutes: 99,
+      seconds: 99
+    }; 
+    window.localStorage.setItem('highscore', JSON.stringify(score));
+  }
 
   //////////////////////////////////////////////
   //creates the gameboard
