@@ -11,15 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
   let timerStatus = false;
   let t;
 
+  //default highscore
+  const score = {
+    hours: 99,
+    minutes: 99,
+    seconds: 99
+  }; 
+
   //set default highscore for first time players
-  if(null === window.localStorage) {
-    const score = {
-      hours: 99,
-      minutes: 99,
-      seconds: 99
-    }; 
+  if (localStorage.getItem("highscore") === null) {
     window.localStorage.setItem('highscore', JSON.stringify(score));
-  }
+  };
 
   //////////////////////////////////////////////
   //creates the gameboard
@@ -404,14 +406,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let localsec = parseInt(localhighscore.seconds);
 
     //formatting (padding with 0s in front of numbers less than 10 for sec,min,hr variable)
-    if (score.seconds < 10) {
-      score.seconds = '0' + score.seconds;
-    }
-    if (score.minutes < 10) {
-      score.minutes = '0' + score.minutes;
-    }
-    if (score.hours < 10) {
-      score.hours = '0' + score.hours;
+    const displayzero = (h, m, s) => {
+      if (s < 10) {
+        s = '0' + s;
+      }
+      if (m < 10) {
+        m = '0' + m;
+      }
+      if (h < 10) {
+        h = '0' + h;
+      }
+      document.getElementById("highscore").innerHTML =  "high score: " + h + ':' + m + ':' + s;
     }
 
     //checks current game score against local storage game score
@@ -419,17 +424,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (score.hours<localhr) {
       window.localStorage.clear();
       window.localStorage.setItem('highscore', JSON.stringify(score));
-      document.getElementById("highscore").innerHTML =  "high score: " + score.hours + ':' + score.minutes + ':' + score.seconds;
+      displayzero(score.hours, score.minutes, score.seconds);
     //if hr=hr && if current min < storage min, store
     } else if (score.hours===localhr && score.minutes<localmin) {
       window.localStorage.clear();
       window.localStorage.setItem('highscore', JSON.stringify(score));
-      document.getElementById("highscore").innerHTML =  "high score: " + score.hours + ':' + score.minutes + ':' + score.seconds;
+      displayzero(score.hours, score.minutes, score.seconds);
     //if hr=hr && if min=min && if current sec < storage sec, store
     } else if (score.minutes===localmin && score.seconds<localsec) {
       window.localStorage.clear();
       window.localStorage.setItem('highscore', JSON.stringify(score));
-      document.getElementById("highscore").innerHTML =  "high score: " + score.hours + ':' + score.minutes + ':' + score.seconds;
+      displayzero(score.hours, score.minutes, score.seconds);
     //if local storage high score is lower than current game high score, exit
     } else {
       return;
