@@ -3,12 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
   let totalbombs = Math.floor(100/8); //total number of bombs in the gameboard
   let rats = 0; //number of rats used in the gameboard
   let gameover = false;
+
   //timer
   let hr = 0;
   let min = 0;
   let sec = 0;
   let timerStatus = false;
   let t;
+
+  //set default highscore
+  const score = {
+    hours: 99,
+    minutes: 99,
+    seconds: 99
+  }; 
+  window.localStorage.setItem('highscore', JSON.stringify(score));
+
   //////////////////////////////////////////////
   //creates the gameboard
   //////////////////////////////////////////////
@@ -32,8 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (localhr < 10) {
         localhr = '0' + localhr;
       }
-      //display local storage highscore
-      document.getElementById("highscore").innerHTML =  "high score: " + localhr + ':' + localmin + ':' + localsec;
+      //do not display default highscore
+      if (localhr===99) {
+        document.getElementById("highscore").innerHTML =  "high score: 00:00:00";
+      } else {
+        //display local storage highscore
+        document.getElementById("highscore").innerHTML =  "high score: " + localhr + ':' + localmin + ':' + localsec;
+      }
 
       //randomise bombs and void tiles. attach as a class to each grid.
       const bombtiles = Array.from({length: totalbombs}, () => 'bomb'); //makes an array of 'bomb', which are grids with bombs
