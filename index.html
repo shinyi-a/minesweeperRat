@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Play Minesweeper Rat</title>
-        <link rel="icon" href="favicon.ico">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
-        <script src="https://code.jquery.com/ui/1.13.0-rc.2/jquery-ui.min.js" integrity="sha256-RQLbEU539dpygNMsBGZlplus6CkitaLy0btTCHcULpI=" crossorigin="anonymous"></script>
-        <script src="app.js" charset="utf-8"></script>
-        <link rel="stylesheet" href="style.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Gamja+Flower&display=swap" rel="stylesheet">
 
+  <head>
+    <meta charset="utf-8">
+    <title>Play Minesweeper Rat</title>
+    <link rel="icon" href="favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/ui/1.13.0-rc.2/jquery-ui.min.js" integrity="sha256-RQLbEU539dpygNMsBGZlplus6CkitaLy0btTCHcULpI=" crossorigin="anonymous"></script>
+    <script src="app.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Gamja+Flower&display=swap" rel="stylesheet">
+  </head>
 
-        <h1>Minesweeper Rat <span class="ratTitle">🐀</span></h1>
-        <div id="timer">00:00:00</div>
-        <div class="middle">
-            <div class="scorerat">
-                  <div class="rat">rats left:</div>
-                  <div id="highscore">high score:</div>
-            </div>
-        </div>
-        <div class="minefield">
-        <div class="container"></div>
-        <div id="gameoverMsg"></div>
-        <div id="tryagainbtn">Try again?</div>
-        </div>
-        <audio id="bgmusic"><source src="Mosey.mp3" type="audio/mp3"></audio>
-        <audio id="explodeaudio"><source src="FireworkBurst.mp3" type="audio/mp3"></audio>
-        <audio id="ratsqueak"><source src="RatSqueak.mp3" type="audio/mp3"></audio>
-        <audio id="winsound"><source src="winsound.wav" type="audio/wav"></audio>
-        <audio id="losesound"><source src="losesound.wav" type="audio/wav"></audio>
-        <audio id="cleartile"><source src="cleartile.wav" type="audio/wav"></audio>
-        <footer>
-          <div id="audiobtn">Music 🔇</div>
-        </footer>
-    
-      </body>
+  <body>
+    <h1>Minesweeper Rat <span class="ratTitle">🐀</span></h1>
+    <div id="timer">00:00:00</div>
+    <div class="middle">
+      <div class="scorerat">
+        <div class="rat">rats left:</div>
+        <div id="highscore">high score:</div>
+      </div>
+    </div>
+    <div class="minefield">
+      <div class="container"></div>
+      <div id="gameoverMsg"></div>
+      <div id="tryagainbtn">Try again?</div>
+    </div>
+    <audio id="bgmusic"><source src="Mosey.mp3" type="audio/mp3"></audio>
+    <audio id="explodeaudio"><source src="FireworkBurst.mp3" type="audio/mp3"></audio>
+    <audio id="ratsqueak"><source src="RatSqueak.mp3" type="audio/mp3"></audio>
+    <audio id="winsound"><source src="winsound.wav" type="audio/wav"></audio>
+    <audio id="losesound"><source src="losesound.wav" type="audio/wav"></audio>
+    <audio id="cleartile"><source src="cleartile.wav" type="audio/wav"></audio>
+  
+  <footer>
+    <div id="audiobtn">Music 🔇</div>
+  </footer>
+  
+  </body>
+
 </html>
